@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{%block title%}
+    <title>Details page</title>
+{%endblock%}
+{% block content %}
+
+<style>
+{% comment %} img{
+  heigh:100px
+} {% endcomment %}
+
+
+.card{
+ 
+    width: 100%;
+    background: #031733;
+    color: #fff;
+    top: 50%;
+    left: 0%;
+    padding: 0px 0px ;
+}
+
+ .col-md-3
+          { 
+          display: inline-block;
+          margin-left:38%;
+  
+          flex: 1 1 auto;
+          padding-bottom:20px;
+          }
+.col-md-3 img
+            {
+            width: 100%;
+            height: 200px;
+            }                     
+</style>
+
+
+{% for m in form %}
+<h5 class="my-4">Flash Sale On {{form.0.username}} - Recommended Items</h5>
+{%endfor%}
+<div class="card">
+
+ {%for n in posts%}
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+           <p class="card-text">{{n.post_user.first_name.title}} {{n.post_user.last_name.title}} --{{n.create_date}}</p>
+           <p class="card-text">{{n.caption.capitalize}}</p>
+           {% comment %} {% if image is none%}
+
+           {%else%} {% endcomment %}
+              <img src='/media/{{n.image}}' class="card-img-top" alt="...">
+           {% comment %} {%endif%} {% endcomment %}
+          
+  <div class="card-body">
+   {% if n.post_text|length > 40 %}
+        <p class="half-content" id="half-{{n.post_user.id}}">{{ n.post_text|truncatechars:23 }}<a data-id="{{n.post_user.id}}" href="javascript:void();" class="show-hide-btn">read more</a></p>
+        <p class="full-content" id="full-{{n.post_user.id}}" style="display: none;">{{ n.post_text}}<a data-id="{{n.post_user.id}}" href="javascript:void();" class="show-hide-btnn">read less</a></p>
+       
+    {% else %}
+        <p>{{ n.post_text }}</p>
+    {% endif %}
+
+
+
+<script>
+ $(document).ready(function(){
+        $(".show-hide-btn").click(function(){
+            var id = $(this).data("id");
+
+            $("#half-"+id).hide();
+            $("#full-"+id).show();
+           
+        });
+        
+    });
+
+   $(document).ready(function(){
+        $(".show-hide-btnn").click(function(){
+            var id = $(this).data("id");
+            $("#half-"+id).show();
+            $("#full-"+id).hide();
+            
+        });
+      
+    }); 
+
+
+{% comment %} $(document).ready(function(){ 
+   $(.show-hide-btn").click( function() {
+     $('.half-content').show();
+    $(".full-content").hide();
+
+  $(.show-hide-btnn").click( function() {
+    $(this).each( function() {
+      $(".full-content", ".full-content").toggle();
+    });
+  });
+}); {% endcomment %}
+
+</script> 
+         
+        
+         
+        {%if user.is_authenticated%}
+         {%if user.id == n.post_user.id%}
+            <a class="btn btn-primary" href="{%url "edit" n.sno%}" role="button">Edit</a>
+            <a class="btn btn-danger" href="{%url "delete" n.sno%}" role="button">Delete</a>
+          
+          {%endif%}
+
+        {%endif%}
+            
+            </div>
+          </div>
+        </div>
+
+  {% endfor %}
+</div> 
+ {%endblock %} 

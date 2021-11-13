@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+{% comment %} img{
+  heigh:100px
+} {% endcomment %}
+
+
+.card{
+  display: inline-block;
+}
+
+ .col-md-3
+          {
+          display: inline-block;
+          margin-left:-4px;
+          flex: 1 1 auto;
+          padding-bottom:10px;
+          }
+.col-md-3 img
+            {
+            width: 100%;
+            height: 200px;
+            }                     
+</style>
+
+
+{% for m in form %}
+<h5 class="my-4">Flash Sale On {{form.0.username}} - Recommended Items</h5>
+{%endfor%}
+<div class="card">
+
+ {%for n in posts%}
+ {%if user.id == n.post_user.id%}
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: 18rem;">
+           <p class="card-text">{{n.post_user.first_name.title}} {{n.post_user.last_name.title}} --{{n.create_date}}</p>
+           <p class="card-text">{{n.caption.capitalize}}</p>
+           {% comment %} {% if image is none%}
+
+           {%else%} {% endcomment %}
+              <img src='/media/{{image}}' class="card-img-top" alt="...">
+           {% comment %} {%endif%} {% endcomment %}
+          
+            <div class="card-body">
+              <h5 class="card-title">{{n.post_text}}</h5>
+              {% comment %} <p class="card-text">{{i.desc}}</p> {% endcomment %}
+
+            </div>
+          </div>
+        </div>
+     {%endif%}
+  {% endfor %}
+</div> 
+ {%endblock %} 

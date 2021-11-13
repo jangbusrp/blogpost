@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+ <style>
+body{
+    margin: 0;
+    padding: 0;
+    background: url(/Image/loginform/wall.jpg);
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+}
+.loginbox{
+    width: 400px;
+    height: 300px;
+    background: #031733;
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    padding: 50px 30px;
+    margin-top: 20px;
+}
+
+h1{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+
+.loginbox input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.loginbox input[type="submit"]
+{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #172749;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+.loginbox input[type="submit"]:hover
+{
+    cursor: pointer;
+    background: #ffc107;
+    color: #000;
+}
+
+</style>
+
+<body>
+<div class="background">
+<div class="loginbox">
+<h1>Delete Post "{{item.caption}}"?</h1>
+<form action="{%url 'delete' item.pk%} " method= 'POST'>
+{% csrf_token %}
+
+
+
+<input type="submit" name=" " value="Confirm">
+ <a class="btn btn-primary" href="{%url "details"%}" role="button">Cancle</a>
+</form>
+
+</div> 
+</div>
+</body> 
+{%endblock %}
